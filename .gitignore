@@ -1,0 +1,4 @@
+catan-video/images/
+catan-video/out/
+__pycache__/
+*.pyc
