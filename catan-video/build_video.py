@@ -30,116 +30,143 @@ IMAGES_DIR = "images"
 # overlay = None | {"lines": [...], "pos": "top"|"bottom"|"center", "delay": s}
 
 SCENES = [
-    # 0-4s: Fade in on full board — establishing
+    # 0-4s: Fade in — full board overhead establishing shot
     {
         "slug": "full_board",
         "dur": 4.0,
-        "zoom": (1.0, 1.15),
-        "pan":  (0.0, -0.04),
+        "zoom": (1.05, 1.2),
+        "pan":  (0.0, -0.03),
         "overlay": None,
     },
-    # 4-8s: Title card — HIGH HAMPTONS CATAN
+    # 4-8s: Title card over full board
     {
         "slug": "full_board",
-        "dur": 4.0,
-        "zoom": (1.15, 1.25),
+        "dur": 4.5,
+        "zoom": (1.2, 1.3),
         "pan":  (0.02, 0.0),
         "overlay": {
             "lines": ["HIGH HAMPTONS", "CATAN TRADITION"],
-            "sizes": [110, 52],
+            "sizes": [108, 50],
             "pos": "center",
-            "delay": 0.4,
+            "delay": 0.5,
         },
     },
-    # 8-13s: Ocean/port sweep — blue water intro
+    # 8-13s: Ocean sweep with red ship
     {
         "slug": "ocean",
-        "dur": 5.0,
-        "zoom": (1.2, 1.05),
-        "pan":  (-0.06, 0.0),
+        "dur": 4.5,
+        "zoom": (1.25, 1.05),
+        "pan":  (-0.05, 0.0),
         "overlay": {
             "lines": ["THE ISLAND AWAITS"],
-            "sizes": [60],
+            "sizes": [62],
             "pos": "bottom",
             "delay": 1.0,
         },
     },
-    # 13-18s: Forest tile close-up
+    # 13-17s: Forest close-up
     {
         "slug": "forest",
-        "dur": 5.0,
+        "dur": 4.0,
         "zoom": (1.1, 1.3),
-        "pan":  (0.0, -0.06),
+        "pan":  (0.0, -0.05),
         "overlay": {
             "lines": ["ANCIENT FORESTS", "LUMBER FOR THE BRAVE"],
-            "sizes": [68, 36],
+            "sizes": [66, 34],
             "pos": "top",
             "delay": 0.8,
         },
     },
-    # 18-23s: Mountain/ore tile
-    {
-        "slug": "mountain",
-        "dur": 5.0,
-        "zoom": (1.2, 1.05),
-        "pan":  (0.04, 0.02),
-        "overlay": {
-            "lines": ["ORE FROM THE DEEP", "MOUNTAINS NEVER YIELD"],
-            "sizes": [68, 36],
-            "pos": "bottom",
-            "delay": 0.8,
-        },
-    },
-    # 23-27s: Grain/wheat tile
+    # 17-21s: Grain field
     {
         "slug": "grain",
         "dur": 4.0,
-        "zoom": (1.05, 1.2),
-        "pan":  (-0.03, 0.0),
+        "zoom": (1.05, 1.22),
+        "pan":  (-0.03, 0.02),
         "overlay": {
             "lines": ["GOLDEN WHEAT FIELDS"],
-            "sizes": [68],
+            "sizes": [66],
             "pos": "top",
             "delay": 0.6,
         },
     },
-    # 27-32s: Pasture tile with sheep
+    # 21-25s: Mountain/ore
     {
-        "slug": "pasture",
-        "dur": 5.0,
-        "zoom": (1.15, 1.0),
-        "pan":  (0.0, 0.05),
+        "slug": "mountain",
+        "dur": 4.0,
+        "zoom": (1.2, 1.05),
+        "pan":  (0.04, 0.02),
         "overlay": {
-            "lines": ["ROLLING PASTURES", "WHERE WOOL IS SPUN TO GOLD"],
-            "sizes": [68, 36],
+            "lines": ["ORE FROM THE DEEP"],
+            "sizes": [66],
             "pos": "bottom",
             "delay": 0.8,
         },
     },
-    # 32-37s: Wide board overhead — pull back
+    # 25-29s: Pasture
+    {
+        "slug": "pasture",
+        "dur": 4.0,
+        "zoom": (1.15, 1.0),
+        "pan":  (0.0, 0.04),
+        "overlay": {
+            "lines": ["ROLLING PASTURES"],
+            "sizes": [66],
+            "pos": "bottom",
+            "delay": 0.7,
+        },
+    },
+    # 29-33s: Stone/ore ruins
+    {
+        "slug": "stone",
+        "dur": 4.0,
+        "zoom": (1.1, 1.28),
+        "pan":  (0.03, -0.03),
+        "overlay": {
+            "lines": ["RICH IN STONE"],
+            "sizes": [66],
+            "pos": "top",
+            "delay": 0.7,
+        },
+    },
+    # 33-37s: Wide overhead — pull back dramatically
     {
         "slug": "wide",
-        "dur": 5.0,
-        "zoom": (1.3, 1.0),
+        "dur": 4.5,
+        "zoom": (1.35, 1.0),
         "pan":  (0.0, 0.0),
         "overlay": None,
     },
-    # 37-42s: Final card
+    # 37-43s: Final outro — low dramatic angle with title
     {
-        "slug": "wide",
-        "dur": 5.0,
-        "zoom": (1.0, 1.05),
-        "pan":  (0.0, 0.0),
+        "slug": "outro",
+        "dur": 6.0,
+        "zoom": (1.0, 1.1),
+        "pan":  (0.0, -0.03),
         "overlay": {
-            "lines": ["EVERY PIECE, HAND PRINTED", "EVERY GAME, A LEGEND", "", "HIGH HAMPTONS · SINCE 2023"],
-            "sizes": [58, 58, 10, 32],
+            "lines": ["EVERY PIECE, HAND PRINTED", "EVERY GAME, A LEGEND", "", "HIGH HAMPTONS  ·  EST. 2023"],
+            "sizes": [56, 56, 8, 30],
             "pos": "center",
-            "delay": 0.5,
+            "delay": 0.8,
         },
     },
 ]
 
 # Image slot assignments — filenames to look for (partial match, case-insensitive)
+# Explicit file assignments (overrides hint-matching)
+SLUG_FILES = {
+    "full_board": "IMG_3108.jpeg",  # full overhead board
+    "ocean":      "IMG_3114.jpeg",  # red ship on ocean
+    "forest":     "IMG_3115.jpeg",  # forest tiles close-up
+    "grain":      "IMG_3116.jpeg",  # grain hex with wagon
+    "mountain":   "IMG_3109.jpeg",  # dark ore/mountain tile
+    "pasture":    "IMG_3110.jpeg",  # teal pasture with barn
+    "desert":     "IMG_3111.jpeg",  # white desert tile
+    "stone":      "IMG_3112.jpeg",  # red stone ruins tile
+    "wide":       "IMG_3117.jpeg",  # second overhead wide
+    "outro":      "IMG_3118.jpeg",  # low dramatic angle
+}
+
 SLUG_HINTS = {
     "full_board": ["board", "full", "overhead", "wide", "overview"],
     "ocean":      ["ocean", "sea", "blue", "water", "port"],
@@ -148,6 +175,9 @@ SLUG_HINTS = {
     "grain":      ["grain", "wheat", "yellow", "gold", "field"],
     "pasture":    ["pasture", "sheep", "wool", "green"],
     "wide":       ["wide", "full", "board", "overhead"],
+    "desert":     ["desert", "sand", "white"],
+    "stone":      ["stone", "red", "ruins"],
+    "outro":      ["outro", "final"],
 }
 
 
@@ -157,29 +187,32 @@ def load_images():
     files = [f for f in files if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp'))]
     if not files:
         print(f"ERROR: No images found in {IMAGES_DIR}/")
-        print("Please drop your photos into the images/ folder and re-run.")
         sys.exit(1)
 
-    print(f"Found {len(files)} images: {[os.path.basename(f) for f in files]}")
+    print(f"Found {len(files)} images")
 
-    # Try slug matching first
+    # Build name->path lookup
+    name_map = {os.path.basename(f): f for f in files}
+
     slug_map = {}
+    # Use explicit assignments first
+    for slug, fname in SLUG_FILES.items():
+        if fname in name_map:
+            slug_map[slug] = name_map[fname]
+        else:
+            print(f"WARNING: {fname} not found for slug '{slug}'")
+
+    # Hint-based fallback for anything still missing
     for slug, hints in SLUG_HINTS.items():
-        for f in files:
-            name = os.path.basename(f).lower()
-            if any(h in name for h in hints):
-                slug_map[slug] = f
-                break
+        if slug not in slug_map:
+            for f in files:
+                name = os.path.basename(f).lower()
+                if any(h in name for h in hints):
+                    slug_map[slug] = f
+                    break
 
-    # Fallback: assign sequentially to unmatched slugs
-    used = set(slug_map.values())
-    remaining = [f for f in files if f not in used]
-    unmatched_slugs = [s for s in SLUG_HINTS if s not in slug_map]
-    for slug, f in zip(unmatched_slugs, remaining):
-        slug_map[slug] = f
-
-    # Any still missing: use the first available image
-    for slug in SLUG_HINTS:
+    # Final fallback
+    for slug in list(SLUG_FILES.keys()) + list(SLUG_HINTS.keys()):
         if slug not in slug_map:
             slug_map[slug] = files[0]
 
