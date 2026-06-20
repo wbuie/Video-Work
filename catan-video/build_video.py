@@ -220,9 +220,17 @@ def load_images():
     for slug, f in slug_map.items():
         print(f"  {slug:12s} → {os.path.basename(f)}")
 
+    # Pre-downscale oversized sources. Output is 1920x1080 and max zoom is
+    # ~1.35, so we never need more than ~2800px wide. Downscaling the 4-6K
+    # phone photos once here roughly halves per-frame processing time with
+    # no visible quality loss.
+    MAX_SRC_W = 2800
     loaded = {}
     for slug, f in slug_map.items():
         img = Image.open(f).convert("RGB")
+        if img.width > MAX_SRC_W:
+            new_h = int(img.height * MAX_SRC_W / img.width)
+            img = img.resize((MAX_SRC_W, new_h), Image.LANCZOS)
         loaded[slug] = img
     return loaded
 
@@ -448,6 +456,7 @@ def render_video(frames_gen, total_frames, out_path):
 
     cmd = [
         ffmpeg, "-y",
+        "-loglevel", "error",
         "-f", "rawvideo",
         "-vcodec", "rawvideo",
         "-s", f"{W}x{H}",
@@ -455,23 +464,37 @@ def render_video(frames_gen, total_frames, out_path):
         "-r", str(FPS),
         "-i", "pipe:0",
         "-vcodec", "libx264",
-        "-preset", "slow",
+        "-preset", "medium",
         "-crf", "18",
         "-pix_fmt", "yuv420p",
         "-movflags", "+faststart",
         out_path,
     ]
 
-    proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+    # IMPORTANT: redirect ffmpeg's stderr to a LOG FILE, not a pipe.
+    # A captured-but-undrained stderr pipe fills its 64KB buffer and
+    # deadlocks ffmpeg (it blocks writing stderr while we block in wait()),
+    # leaving the MP4 without its moov atom = unplayable file.
+    log_path = out_path + ".ffmpeg.log"
+    with open(log_path, "wb") as logf:
+        proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stderr=logf)
 
-    for frame in frames_gen:
-        proc.stdin.write(np.array(frame).tobytes())
+        try:
+            for frame in frames_gen:
+                proc.stdin.write(np.array(frame).tobytes())
+        except BrokenPipeError:
+            proc.wait()
+            with open(log_path) as lf:
+                print(lf.read())
+            raise RuntimeError("ffmpeg exited early — see log above")
 
-    proc.stdin.close()
-    proc.wait()
+        proc.stdin.close()
+        proc.wait()
+
     if proc.returncode != 0:
-        print(proc.stderr.read().decode())
-        raise RuntimeError("ffmpeg failed")
+        with open(log_path) as lf:
+            print(lf.read())
+        raise RuntimeError(f"ffmpeg failed (exit {proc.returncode})")
 
     print(f"\n✓ Rendered: {out_path}")
     size_mb = os.path.getsize(out_path) / 1e6
