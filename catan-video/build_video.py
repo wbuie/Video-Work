@@ -331,8 +331,8 @@ SCENES = [
         "zoom": (1.1, 1.28),
         "pan":  (0.03, -0.03),
         "overlay": {
-            "lines": ["BRICK & ORE", "THE FOUNDATION OF EMPIRES"],
-            "sizes": [80, 34],
+            "lines": ["BRICK", "THE FOUNDATION OF EMPIRES"],
+            "sizes": [100, 34],
             "pos": "center",
             "delay": 0.7,
         },
@@ -352,8 +352,8 @@ SCENES = [
         "zoom": (1.0, 1.1),
         "pan":  (0.0, -0.03),
         "overlay": {
-            "lines": ["EVERY PIECE, HAND PRINTED", "EVERY GAME, A LEGEND", "", "HIGH HAMPTONS  ·  EST. 2025"],
-            "sizes": [56, 56, 8, 30],
+            "lines": ["EVERY PIECE, HAND PRINTED", "EVERY GAME, A LEGEND", "", "UNITED IN CHRIST  ·  DIVIDED BY CATAN", "", "HIGH HAMPTONS  ·  EST. 2025"],
+            "sizes": [56, 56, 10, 32, 8, 26],
             "pos": "center",
             "delay": 0.8,
         },
@@ -588,9 +588,11 @@ def generate_frames(scenes, images):
                 frame = add_vignette(frame)
                 frame = add_letterbox(frame)
 
-            # Cross-dissolve: first 12 frames from prev scene
-            if si > 0 and fi < 12 and prev_last_frame is not None:
-                blend = fi / 12.0
+            # Cross-dissolve: first 24 frames from prev scene (ease in/out curve)
+            DISSOLVE = 24
+            if si > 0 and fi < DISSOLVE and prev_last_frame is not None:
+                raw = fi / DISSOLVE
+                blend = raw * raw * (3 - 2 * raw)  # smoothstep
                 frame_arr = np.array(frame).astype(float)
                 prev_arr  = np.array(prev_last_frame).astype(float)
                 blended   = (prev_arr * (1 - blend) + frame_arr * blend).astype(np.uint8)
