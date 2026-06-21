@@ -259,31 +259,20 @@ SCENES = [
             "delay": 0.5,
         },
     },
-    # 8.5-12.5s: PROCEDURAL — hex board builds itself
-    {
-        "generator": "hex_board",
-        "dur": 4.0,
-        "overlay": {
-            "lines": ["THE ISLAND OF CATAN"],
-            "sizes": [62],
-            "pos": "bottom",
-            "delay": 1.5,
-        },
-    },
-    # 12.5-17s: Ocean sweep with red ship
+    # 8-13s: Ocean sweep with red ship
     {
         "slug": "ocean",
         "dur": 4.5,
         "zoom": (1.25, 1.05),
         "pan":  (-0.05, 0.0),
         "overlay": {
-            "lines": ["THE ISLAND AWAITS"],
-            "sizes": [62],
+            "lines": ["THE ISLAND AWAITS", "WHERE FORTUNES ARE FORGED"],
+            "sizes": [62, 32],
             "pos": "bottom",
             "delay": 1.0,
         },
     },
-    # 17-21s: Forest close-up
+    # 13-17s: Forest close-up
     {
         "slug": "forest",
         "dur": 4.0,
@@ -296,58 +285,59 @@ SCENES = [
             "delay": 0.8,
         },
     },
-    # 21-25s: Grain field
+    # 17-21s: Grain field
     {
         "slug": "grain",
         "dur": 4.0,
         "zoom": (1.05, 1.22),
         "pan":  (-0.03, 0.02),
         "overlay": {
-            "lines": ["GOLDEN WHEAT FIELDS"],
-            "sizes": [66],
+            "lines": ["GOLDEN WHEAT FIELDS", "BREAD FOR THE BOLD"],
+            "sizes": [66, 34],
             "pos": "top",
             "delay": 0.6,
         },
     },
-    # 25-30s: PROCEDURAL — resource reveal cards
-    {
-        "generator": "resource_reveal",
-        "dur": 5.0,
-        "overlay": None,
-    },
-    # 30-34s: Mountain/ore
+    # 21-25s: Mountain/ore
     {
         "slug": "mountain",
         "dur": 4.0,
         "zoom": (1.2, 1.05),
         "pan":  (0.04, 0.02),
         "overlay": {
-            "lines": ["ORE FROM THE DEEP"],
-            "sizes": [66],
+            "lines": ["ORE FROM THE DEEP", "RICHES OF THE MOUNTAIN"],
+            "sizes": [66, 34],
             "pos": "bottom",
             "delay": 0.8,
         },
     },
-    # 34-38s: Stone/brick ruins — "BRICK & ORE"
+    # 25-29s: Pasture
+    {
+        "slug": "pasture",
+        "dur": 4.0,
+        "zoom": (1.15, 1.0),
+        "pan":  (0.0, 0.04),
+        "overlay": {
+            "lines": ["ROLLING PASTURES", "WOOL FOR THE WISE"],
+            "sizes": [66, 34],
+            "pos": "bottom",
+            "delay": 0.7,
+        },
+    },
+    # 29-33s: Brick & Ore tile
     {
         "slug": "stone",
         "dur": 4.0,
         "zoom": (1.1, 1.28),
         "pan":  (0.03, -0.03),
         "overlay": {
-            "lines": ["BRICK & ORE"],
-            "sizes": [80],
+            "lines": ["BRICK & ORE", "THE FOUNDATION OF EMPIRES"],
+            "sizes": [80, 34],
             "pos": "center",
             "delay": 0.7,
         },
     },
-    # 38-41s: PROCEDURAL — gold hex grid zoom for transition
-    {
-        "generator": "outro_hex",
-        "dur": 3.0,
-        "overlay": None,
-    },
-    # 41-45.5s: Wide overhead — pull back dramatically
+    # 33-37s: Wide overhead — pull back dramatically
     {
         "slug": "wide",
         "dur": 4.5,
@@ -355,7 +345,7 @@ SCENES = [
         "pan":  (0.0, 0.0),
         "overlay": None,
     },
-    # 45.5-51.5s: Final outro — low dramatic angle with title
+    # 37-43s: Final outro — low dramatic angle with title
     {
         "slug": "outro",
         "dur": 6.0,
